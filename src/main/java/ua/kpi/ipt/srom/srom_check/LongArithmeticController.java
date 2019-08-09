@@ -13,6 +13,6 @@ public class LongArithmeticController {
     @GetMapping("/")
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
-        return "index";
+        return "index.html";
     }
 }
