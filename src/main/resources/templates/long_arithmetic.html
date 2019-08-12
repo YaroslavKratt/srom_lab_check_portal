@@ -1,36 +1,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title th:text="#{page.title}">Home Page</title></head>
+<head th:replace="head">
 <body>
+<div th:replace="navbar.html"></div>
+<div class="container px-5 pt-5">
+    <div class="row align-items-center">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img th:src="@{/favicon.ico}" width="45" height="45" class="d-inline-block align-top" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <text th:text="#{page.navbar.long.arithmetic}"></text>
-                    <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="">
-                    <text th:text="#{page.navbar.convertor}"></text>
-                    <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
+        <div class="col-lg-3 col-md-3 offset-md-3 text-center">
+            <label for="fnumber" th:text="#{messages.first.number}"></label>
+        </div>
+        <div class="col-lg-3 col-md-3 text-center">
+            <label for="snumber" th:text="#{messages.second.number}"></label>
+        </div>
+        <div class="col-lg-3 col-md-3 text-center">
+            <label for="module" th:text="#{messages.module.number}"></label>
+        </div>
     </div>
-</nav>
+    <form action="/calculate">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <select class="custom-select" id="numberSystemSelect">
+                    <option selected th:text="#{message.choose.number.system}">Choose...</option>
+                    <option value="HEX" th:text="#{number.format.hex}">HEX</option>
+                    <option value="BIN" th:text="#{number.format.bin}">Binary</option>
+                    <option value="DEC" th:text="#{number.format.dec}">Decimal</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <input type="text" id="fnumber" class="form-control">
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <input type="text" id="snumber" class="form-control">
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <input type="text" id="module" class="form-control">
+            </div>
+        </div>
+        <div class="row pt-3 ">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary " th:text="#{message.button.calculate}"></button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
+<script th:replace="scripts"></script>
 </html>
