@@ -4,3 +4,6 @@
 .btn-primary:hover{
     background-color: #db13f8;
 }
+select{
+    bottom: 0;
+}
