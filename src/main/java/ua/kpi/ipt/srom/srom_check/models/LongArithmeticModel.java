@@ -19,13 +19,6 @@ public class LongArithmeticModel {
     @NotNull
     private String numberSystem;
 
-    public LongArithmeticModel(String firstNumber, String secondNumber, String module, String numberSystem) {
-        this.firstNumber = firstNumber;
-        this.secondNumber = secondNumber;
-        this.module = module;
-        this.numberSystem = numberSystem;
-    }
-
     public LongArithmeticModel() {
 
     }

@@ -1,8 +1,10 @@
 .btn-primary{
     background-color: #aa00f8;
+    border-color: #000000;
 }
 .btn-primary:hover{
     background-color: #db13f8;
+     border-color: #000000;
 }
 select{
     bottom: 0;
