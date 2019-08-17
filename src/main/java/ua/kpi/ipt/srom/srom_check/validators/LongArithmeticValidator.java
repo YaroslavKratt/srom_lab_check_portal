@@ -16,7 +16,7 @@ import java.util.Map;
 public class LongArithmeticValidator implements org.springframework.validation.Validator {
     private static final String HEX = "(^$)|(^[0-9A-Fa-f]+$)";
     private static final String BIN = "(^$)|(^[01]+$)";
-    private static final String DEC = "(^$)|(^\\\\d+$)";
+    private static final String DEC = "(^$)|(^[0-9]+$)";
 
     private static final Map<String, String> numberSystemMap = new HashMap();
     @Autowired
