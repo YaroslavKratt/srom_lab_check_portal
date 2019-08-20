@@ -1,4 +1,4 @@
-package ua.kpi.ipt.srom.srom_check.converters;
+package ua.kpi.ipt.srom.srom_check.models;
 
 public enum NumberSystem {
     BIN(2), HEX(16), OCTAL(8), DECIMAL(10);

@@ -1,6 +1,7 @@
 package ua.kpi.ipt.srom.srom_check.services;
 
 import org.springframework.stereotype.Service;
+import ua.kpi.ipt.srom.srom_check.models.LongArithmeticModel;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -33,15 +34,10 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     @Override
-    public BigInteger modulo(BigInteger a, BigInteger b) {
+    public BigInteger module(BigInteger a, BigInteger b) {
         return a.mod(b);
     }
 
-    @Override
-    public Map<String, BigInteger> calculateAll() {
-        Map<String, BigInteger> map;
-        return null;
-    }
 
     @Override
     public BigInteger pow(BigInteger a, BigInteger b) {
@@ -61,6 +57,25 @@ public class CalculationServiceImpl implements CalculationService {
             }
         }
         return result;
+    }
+
+    @Override
+    public LongArithmeticModel calculateAll(LongArithmeticModel model) {
+        BigInteger a = model.getFirstNumber();
+        BigInteger b = model.getSecondNumber();
+
+        return LongArithmeticModel.builder()
+                .firstNumber(a)
+                .secondNumber(b)
+                .module(module(a,b))
+                .numberSystem(model.getNumberSystem())
+                .sum(add(a, b))
+                .multiplication(multiply(a, b))
+                .division(divide(a, b))
+                .pow(pow(a, b))
+                .square(square(a))
+                .substraction(subtract(a, b))
+                .build();
     }
 }
 

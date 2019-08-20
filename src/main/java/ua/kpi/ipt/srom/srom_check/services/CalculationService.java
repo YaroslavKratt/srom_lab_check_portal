@@ -1,7 +1,8 @@
 package ua.kpi.ipt.srom.srom_check.services;
 
+import ua.kpi.ipt.srom.srom_check.models.LongArithmeticModel;
+
 import java.math.BigInteger;
-import java.util.Map;
 
 
 public interface CalculationService {
@@ -17,7 +18,7 @@ public interface CalculationService {
 
     BigInteger pow (BigInteger a,BigInteger b);
 
-    BigInteger modulo(BigInteger a, BigInteger b);
+    BigInteger module(BigInteger a, BigInteger b);
 
-    Map<String,BigInteger> calculateAll();
+    LongArithmeticModel calculateAll(LongArithmeticModel model);
 }

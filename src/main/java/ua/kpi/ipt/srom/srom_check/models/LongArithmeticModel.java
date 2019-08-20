@@ -1,33 +1,23 @@
 package ua.kpi.ipt.srom.srom_check.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 
 @Setter
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LongArithmeticModel {
-    @NotEmpty(message = "{error.empty.field}")
-    private String firstNumber;
-    @NotEmpty(message = "{error.empty.field}")
-    private String secondNumber;
-    private String module;
-    @NotNull
-    private String numberSystem;
-
-
-    public LongArithmeticModel(String firstNumber, String secondNumber, String module, String numberSystem) {
-        this.firstNumber = firstNumber;
-        this.secondNumber = secondNumber;
-        this.module = module;
-        this.numberSystem = numberSystem;
-    }
-
-    public LongArithmeticModel() {
-
-    }
+    private BigInteger firstNumber;
+    private BigInteger secondNumber;
+    private BigInteger module;
+    private BigInteger sum;
+    private BigInteger substraction;
+    private BigInteger division;
+    private BigInteger multiplication;
+    private BigInteger pow;
+    private BigInteger square;
+    private NumberSystem numberSystem;
 }
