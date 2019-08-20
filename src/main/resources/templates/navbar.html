@@ -11,7 +11,23 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="#" th:text="#{page.navbar.long.arithmetic}"> <span
                     class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="/converters" th:text="#{page.navbar.convertor}"></a>
+            <a class="nav-item nav-link" th:href="@{/converters}" th:text="#{page.navbar.convertor}"></a>
         </div>
+        <ul class="nav navbar-nav ml-auto">
+            <li class="dropdown show">
+                <a type="button" class=" btn btn-primary dropdown-toggle" id="languages" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+
+                <text th:switch="__${#locale.language}__">
+                    <text th:case="en" th:text="#{page.navbar.lang.en}"></text>
+                    <text th:case="ua" th:text="#{page.navbar.lang.ua}"></text>
+                </text>
+                </a>
+                <div class="dropdown-menu">
+                        <a class="dropdown-item"  th:href="@{?lang=en}" th:text="#{page.navbar.lang.en}"></a>
+                        <a class="dropdown-item"  th:href="@{?lang=ua}" th:text="#{page.navbar.lang.ua}"></a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>

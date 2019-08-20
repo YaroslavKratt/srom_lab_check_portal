@@ -1,11 +1,30 @@
-.btn-primary{
+.dropdown-item:hover {
+    background-color: #aa00f8;
+    color: #ffffff;
+}
+
+.btn-primary, #languages {
     background-color: #aa00f8;
     border-color: #000000;
+    color: #ffffff;
+
 }
-.btn-primary:hover{
+
+.btn-primary:hover, #languages:hover {
     background-color: #db13f8;
-     border-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+
 }
-select{
+
+select {
     bottom: 0;
 }
+
+{
+    box-sizing: border-box
+;
+}
+
+
+

@@ -1,3 +1,5 @@
 function removeValidation() {
-$(".is-invalid").removeClass("is-invalid");
-$(".invalid-feedback").hide()}
+    $(".is-invalid").removeClass("is-invalid");
+    $(".invalid-feedback").hide()
+}
+
