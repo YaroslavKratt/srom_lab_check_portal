@@ -39,6 +39,11 @@ public class LongArithmeticController {
         return "long_arithmetic";
     }
 
+    @GetMapping("/error")
+    public String error(){
+        return "error";
+    }
+
     @PostMapping(value = "/calculate")
     public String calculate(@Valid @ModelAttribute("longArithmeticDto") LongArithmeticDto longArithmeticDto, BindingResult bindingResult, Model model) {
         validator.validate(longArithmeticDto, bindingResult);
