@@ -41,22 +41,8 @@ public class CalculationServiceImpl implements CalculationService {
 
     @Override
     public BigInteger pow(BigInteger a, BigInteger b) {
-        if (b.compareTo(BigInteger.ZERO) < 0)
-            throw new IllegalArgumentException();
-        BigInteger z = a;
-        BigInteger result = BigInteger.ONE;
-        byte[] bytes = b.toByteArray();
-        for (int i = bytes.length - 1; i >= 0; i--) {
-            byte bits = bytes[i];
-            for (int j = 0; j < 8; j++) {
-                if ((bits & 1) != 0)
-                    result = result.multiply(z);
-                if ((bits >>= 1) == 0 && i == 0)
-                    return result;
-                z = z.multiply(z);
-            }
-        }
-        return result;
+        //todo
+        return BigInteger.ONE;
     }
 
     @Override

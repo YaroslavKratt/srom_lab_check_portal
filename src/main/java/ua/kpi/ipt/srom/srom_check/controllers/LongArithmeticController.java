@@ -17,6 +17,8 @@ import javax.validation.Valid;
 
 import org.springframework.validation.Validator;
 
+import static ua.kpi.ipt.srom.srom_check.controllers.ControllerConstants.REDIRECT_PREFIX;
+
 @Controller
 public class LongArithmeticController {
     @Resource
@@ -39,20 +41,15 @@ public class LongArithmeticController {
         return "long_arithmetic";
     }
 
-    @GetMapping("/error")
-    public String error(){
-        return "error";
-    }
-
     @PostMapping(value = "/calculate")
     public String calculate(@Valid @ModelAttribute("longArithmeticDto") LongArithmeticDto longArithmeticDto, BindingResult bindingResult, Model model) {
         validator.validate(longArithmeticDto, bindingResult);
         if(bindingResult.hasErrors())
-            return "long_arithmetic";
+            return ControllerConstants.View.LONG_ARITHMETIC;;
 
         LongArithmeticModel longArithmeticModel = calculationService.calculateAll(dtoToModel.convert(longArithmeticDto));
         model.addAttribute("longArithmeticDto", modelToDto.convert(longArithmeticModel));
-
-        return "long_arithmetic";
+        model.addAttribute("calculated",true);
+        return  ControllerConstants.View.LONG_ARITHMETIC;
     }
 }
