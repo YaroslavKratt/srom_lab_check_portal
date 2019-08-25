@@ -21,6 +21,7 @@ select {
 
 .card {
     min-width: 25rem;
+    max-width: 25rem;
     border-color: #aa00f8;
 }
 

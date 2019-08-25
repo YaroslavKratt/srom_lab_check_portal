@@ -17,10 +17,19 @@ public class LongArithmeticDto {
     private String module;
     @NotEmpty(message = "{error.empty.field}")
     private String numberSystem;
+
     private String sum;
-    private String substraction;
+    private String subtraction;
     private String division;
+    private String moduleRes;
     private String multiplication;
     private String pow;
     private String square;
+    private String gcd;
+    private String lcm;
+    private String moduleAdd;
+    private String moduleSubtractioc;
+    private String moduleMult;
+    private String moduleSquare;
+    private String modulePow;
 }

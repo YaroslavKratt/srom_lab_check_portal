@@ -8,6 +8,8 @@ import ua.kpi.ipt.srom.srom_check.models.NumberSystem;
 
 import java.math.BigInteger;
 
+import static java.util.Optional.*;
+
 @Component
 public class LongArithmeticDtoToModelConverter implements Converter<LongArithmeticDto, LongArithmeticModel> {
 
@@ -19,6 +21,11 @@ public class LongArithmeticDtoToModelConverter implements Converter<LongArithmet
         return LongArithmeticModel.builder()
                 .firstNumber(new BigInteger(source.getFirstNumber(), numberSystem.getValue()))
                 .secondNumber(new BigInteger(source.getSecondNumber(), numberSystem.getValue()))
+                .module(ofNullable(source.getModule())
+                        .filter(item -> !item.isEmpty())
+                        .map(m -> new BigInteger(m, numberSystem.getValue()))
+                        .orElse(null)
+                )
                 .numberSystem(numberSystem)
                 .build();
     }

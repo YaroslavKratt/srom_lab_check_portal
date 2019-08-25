@@ -1,14 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
-<div class="col-sm-12 col-md-12 col-lg-6   mt-5 mt-5 " th:fragment="resultCard(res,resName)">
-    <div class="card shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-            <h5 class="card-title text-center">
-                <text th:if="${res!=''}" th:text="${resName}"></text>
-            </h5>
-            <p class="card-text">
-                <text th:if="${res!=''}" th:text="${res}"></text>
-            </p>
+<div th:fragment="resultCard(res,resName)" th:if="${res!= null}" >
+    <div class="col-sm-12 col-md-12 col-lg-6   mt-5 mt-5">
+        <div th:if="${res!= null}" class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                    <text th:text="${resName}"></text>
+                </h5>
+                <p class="card-text">
+                    <text th:if="${res!=null}" th:text="${res}"></text>
+                </p>
+            </div>
         </div>
     </div>
 </div>
