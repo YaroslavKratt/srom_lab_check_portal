@@ -13,3 +13,17 @@
         </div>
     </div>
 </div>
+<div th:fragment="resultCardWithPow(res,A,B,mes)" th:if="${res!= null}" >
+    <div class="col-sm-12 col-md-12 col-lg-6   mt-5 mt-5">
+        <div th:if="${res!= null}" class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                   <text  th:text="${A}"/> <sup th:text="${B}"/><text th:text="${mes}"/>
+                </h5>
+                <p class="card-text text-center">
+                    <text th:if="${res!=null}" th:text="${res}"></text>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

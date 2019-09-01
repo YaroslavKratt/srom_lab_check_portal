@@ -10,27 +10,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.kpi.ipt.srom.srom_check.dto.LongArithmeticDto;
 import ua.kpi.ipt.srom.srom_check.models.LongArithmeticModel;
-import ua.kpi.ipt.srom.srom_check.services.CalculationService;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.validation.Validator;
+import ua.kpi.ipt.srom.srom_check.services.LongArithmeticService;
 
-import static ua.kpi.ipt.srom.srom_check.controllers.ControllerConstants.REDIRECT_PREFIX;
+import java.util.Objects;
+
+import static java.util.Objects.*;
 
 @Controller
 public class LongArithmeticController {
     @Resource
-    private CalculationService calculationService;
+    private LongArithmeticService calculationService;
 
     @Resource
     @Qualifier("longArithmeticValidator")
     private Validator validator;
     @Resource
-    private Converter<LongArithmeticDto,LongArithmeticModel> dtoToModel;
+    private Converter<LongArithmeticDto, LongArithmeticModel> dtoToModel;
     @Resource
-    private Converter<LongArithmeticModel,LongArithmeticDto> modelToDto;
+    private Converter<LongArithmeticModel, LongArithmeticDto> modelToDto;
 
 
     private static final Logger LOG = LoggerFactory.getLogger(LongArithmeticController.class);
@@ -42,14 +44,16 @@ public class LongArithmeticController {
     }
 
     @PostMapping(value = "/calculate")
-    public String calculate(@Valid @ModelAttribute("longArithmeticDto") LongArithmeticDto longArithmeticDto, BindingResult bindingResult, Model model) {
+    public String calculate(@Valid @ModelAttribute("longArithmeticDto") LongArithmeticDto longArithmeticDto,
+                            BindingResult bindingResult, Model model) {
         validator.validate(longArithmeticDto, bindingResult);
-        if(bindingResult.hasErrors())
-            return ControllerConstants.View.LONG_ARITHMETIC;;
+        if (bindingResult.hasErrors())
+            return ControllerConstants.View.LONG_ARITHMETIC;
+        ;
 
-        LongArithmeticModel longArithmeticModel = calculationService.calculateAll(dtoToModel.convert(longArithmeticDto));
+        LongArithmeticModel longArithmeticModel = calculationService.calculateAll(requireNonNull(dtoToModel.convert(longArithmeticDto)));
         model.addAttribute("longArithmeticDto", modelToDto.convert(longArithmeticModel));
-        model.addAttribute("calculated",true);
-        return  ControllerConstants.View.LONG_ARITHMETIC;
+        model.addAttribute("calculated", true);
+        return ControllerConstants.View.LONG_ARITHMETIC;
     }
 }

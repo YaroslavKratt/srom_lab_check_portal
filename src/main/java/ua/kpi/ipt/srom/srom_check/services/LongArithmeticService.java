@@ -13,29 +13,26 @@ import static java.util.Objects.isNull;
 
 @Service
 @Slf4j
-public class LongArithmeticService implements CalculationService {
+public class LongArithmeticService {
     private static final BigInteger BITS_LEFT = BigInteger.ONE.shiftLeft(1024).subtract(BigInteger.ONE);
-    @Override
+
+
     public BigInteger add(BigInteger a, BigInteger b) {
         return a.add(b);
     }
 
-    @Override
     public BigInteger subtract(BigInteger a, BigInteger b) {
         return a.subtract(b);
     }
 
-    @Override
     public BigInteger multiply(BigInteger a, BigInteger b) {
         return a.multiply(b);
     }
 
-    @Override
     public BigInteger square(BigInteger a) {
         return a.pow(2);
     }
 
-    @Override
     public BigInteger divide(BigInteger a, BigInteger b) {
         try {
             return a.divide(b);
@@ -45,7 +42,6 @@ public class LongArithmeticService implements CalculationService {
         }
     }
 
-    @Override
     public BigInteger module(BigInteger a, BigInteger b) {
         try {
             return a.mod(b);
@@ -55,9 +51,8 @@ public class LongArithmeticService implements CalculationService {
         }
     }
 
-    @Override
     public BigInteger pow(BigInteger a, BigInteger b) {
-        a=a.and(BITS_LEFT);
+        a = a.and(BITS_LEFT);
         BigInteger result = BigInteger.ONE;
         String[] reverseBinaryStr = new StringBuilder(b.toString(2))
                 .reverse()
@@ -76,9 +71,9 @@ public class LongArithmeticService implements CalculationService {
 
             log.info("POW:Memory:" + (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1000000);
             a = a.multiply(a);
-            result= result.and(BITS_LEFT);
+            result = result.and(BITS_LEFT);
             log.info("POW:result: " + result.toString(2));
-            if(result.equals(BigInteger.ZERO))
+            if (result.equals(BigInteger.ZERO))
                 break;
         }
 
@@ -150,7 +145,6 @@ public class LongArithmeticService implements CalculationService {
         }
     }
 
-    @Override
     public LongArithmeticModel calculateAll(LongArithmeticModel model) {
         BigInteger a = model.getFirstNumber();
         BigInteger b = model.getSecondNumber();
@@ -165,7 +159,7 @@ public class LongArithmeticService implements CalculationService {
                 .sum(add(a, b))
                 .multiplication(multiply(a, b))
                 .division(divide(a, b))
-              //  .pow(pow(a, b))
+                //  .pow(pow(a, b))
                 .square(square(a))
                 .subtraction(subtract(a, b))
                 .gcd(gcd(a, b))
@@ -175,7 +169,6 @@ public class LongArithmeticService implements CalculationService {
                 .modulePow(modulePow(a, b, m))
                 .moduleSquare(modulePow(a, BigInteger.valueOf(2), m))
                 .moduleSubtraction(moduleSubtract(a, b, m))
-
                 .build();
     }
 }

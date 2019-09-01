@@ -58,12 +58,12 @@
                     <div th:replace="fragments::resultCard(res=*{multiplication},resName = 'A * B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{division},resName = 'A / B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{square},resName = 'A ^ 2 = ')"></div>
+                    <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
                     <div>
                         <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5" id="cards">
                             <div class="card shadow p-3 mb-5 bg-white rounded">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center"> A ^ B = </h5>
+                                    <h5 class="card-title text-center"> A<sup>B</sup></h5>
                                     <p class="card-text text-center" id="powText"/>
                                     <button type="button" class="btn btn-primary pow" id="power"
                                             th:text="#{message.button.calculate.pow}"/>
@@ -76,8 +76,8 @@
                     <div th:replace="fragments::resultCard(res=*{moduleAdd},resName = '(A + B) mod M= ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleSubtractioc},resName = '(A - B) mod M = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleMult},resName = '(A * B) mod M = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{moduleSquare},resName = '(A ^ 2) mod M = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{modulePow},resName = '(A ^ B) mod M = ')"></div>
+                    <div th:replace="fragments::resultCardWithPow(res=*{moduleSquare},A = '(A',B='2',mes=') mod M = ')"></div>
+                    <div th:replace="fragments::resultCardWithPow(res=*{modulePow},A = '(A',B='B',mes=') mod M = ')"></div>
                 </div>
             </div>
         </div>
