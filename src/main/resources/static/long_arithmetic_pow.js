@@ -19,30 +19,40 @@ $(document).on('click', '#power', function () {
     setTimeout(function () {
         var numberSystem = getEnumValue($("#numberSystemSelect").val());
         var a = bigInt($("#fnumber").val(), numberSystem);
-        var result = bigInt.one;
-        var binaryB = bigInt($("#snumber").val(), numberSystem)
-            .toString(2).split("")
-            .reverse();
+        var b = bigInt($("#snumber").val(), numberSystem);
 
-        for (var i = 0; i < binaryB.length; i++) {
-            if (binaryB[i] === '1') {
-                result = result.times(a);
-            }
-            a = a.times(a);
-        }
-        result = result.toString()
-        $("#powText").text(bigInt( result,10).toString(numberSystem));
+        $("#powText").text(bigInt(longPower(a, b), 10).toString(numberSystem));
         $('#cards').waitMe("hide");
     }, 0)
 
 });
+
+function longPower(a, b) {
+    if (a.equals( bigInt.zero))
+        return "0";
+    if (b.equals( bigInt.zero))
+        return "1";
+    var result = bigInt.one;
+    var binaryB = b.toString(2)
+        .split("")
+        .reverse();
+
+    for (var i = 0; i < binaryB.length; i++) {
+        if (binaryB[i] === '1') {
+            result = result.times(a);
+        }
+        a = a.times(a);
+    }
+    result = result.toString()
+    return result;
+}
 
 function spinner(element) {
     $(document).ready(element.waitMe({
         effect: 'bounce',
         text: '',
         bg: '#FFF',
-        color: '#000',
+        color: '#aa00f8',
         maxSize: '',
         waitTime: -1,
         textPos: 'vertical',

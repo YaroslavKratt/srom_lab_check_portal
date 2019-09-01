@@ -51,16 +51,26 @@
             </div>
         </div>
         <div th:if="${calculated}">
-            <div class="container mt-5" >
+            <div class="container mt-5">
                 <div class="row justify-content-center">
-
                     <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{subtraction},resName = 'A - B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{multiplication},resName = 'A * B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{division},resName = 'A / B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{square},resName = 'A ^ 2 = ')"></div>
-
+                    <div>
+                        <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5" id="cards">
+                            <div class="card shadow p-3 mb-5 bg-white rounded">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center"> A ^ B = </h5>
+                                    <p class="card-text text-center" id="powText"/>
+                                    <button type="button" class="btn btn-primary pow" id="power"
+                                            th:text="#{message.button.calculate.pow}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div th:replace="fragments::resultCard(res=*{gcd},resName = #{message.gcd})"></div>
                     <div th:replace="fragments::resultCard(res=*{lcm},resName = #{message.lcm})"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleAdd},resName = '(A + B) mod M= ')"></div>
@@ -68,21 +78,6 @@
                     <div th:replace="fragments::resultCard(res=*{moduleMult},resName = '(A * B) mod M = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleSquare},resName = '(A ^ 2) mod M = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{modulePow},resName = '(A ^ B) mod M = ')"></div>
-                    <div class="col-sm-12 col-md-12 col-lg-6   mt-5 mt-5" id="cards">
-                        <div class="card shadow p-3 mb-5 bg-white rounded">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">
-                                    A ^ B =
-                                </h5>
-                                <p class="card-text" id="powText">
-                                </p>
-                                <button type="button" class="btn btn-primary pow" id="power" th:text="#{message.button.calculate.pow}">
-
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
