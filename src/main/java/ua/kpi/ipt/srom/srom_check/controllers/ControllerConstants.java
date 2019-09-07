@@ -6,5 +6,6 @@ public interface ControllerConstants {
 
     class View {
         public static final String LONG_ARITHMETIC = "long_arithmetic";
+        public static final String FINITE_FIELD = "finite_field";
     }
 }

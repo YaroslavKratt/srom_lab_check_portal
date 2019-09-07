@@ -1,8 +1,10 @@
+
 package ua.kpi.ipt.srom.srom_check.validators;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
+import ua.kpi.ipt.srom.srom_check.dto.FiniteFieldDto;
 import ua.kpi.ipt.srom.srom_check.dto.LongArithmeticDto;
 import ua.kpi.ipt.srom.srom_check.models.NumberSystem;
 
@@ -13,8 +15,8 @@ import static ua.kpi.ipt.srom.srom_check.validators.ValidationConstants.*;
 
 @Service
 @Slf4j
-public class LongArithmeticValidator implements org.springframework.validation.Validator {
-    private static final Map<String, String> numberSystemMap = new HashMap();
+public class FiniteFieldValidator implements org.springframework.validation.Validator {
+    private static final Map<String, String> numberSystemMap = new HashMap<>();
 
     static {
         numberSystemMap.put(NumberSystem.HEX.toString(), HEX_REGEXP);
@@ -29,22 +31,22 @@ public class LongArithmeticValidator implements org.springframework.validation.V
 
     @Override
     public void validate(Object obj, Errors errors) {
-        LongArithmeticDto longArithmeticDto = (LongArithmeticDto) obj;
-        String numberSystem = longArithmeticDto.getNumberSystem();
+        FiniteFieldDto finiteFieldDto = (FiniteFieldDto) obj;
+        String numberSystem = finiteFieldDto.getNumberSystem();
 
-        if (isNotValidField(longArithmeticDto.getFirstNumber(), numberSystem)) {
+        if (isNotValidField(finiteFieldDto.getFirstNumber(), numberSystem)) {
             errors.rejectValue("firstNumber", "error.wrong.format");
             log.warn("Wrong input for first field, number system " + numberSystem);
         }
 
-        if (isNotValidField(longArithmeticDto.getSecondNumber(), numberSystem)) {
+        if (isNotValidField(finiteFieldDto.getSecondNumber(), numberSystem)) {
             errors.rejectValue("secondNumber", "error.wrong.format");
             log.warn("Wrong input for second field, number system " + numberSystem);
         }
 
-        if (isNotValidField(longArithmeticDto.getModule(), numberSystem)) {
-            errors.rejectValue("module", "error.wrong.format");
-            log.warn("Wrong input for module field, number system " + numberSystem);
+        if (isNotValidField(finiteFieldDto.getThirdNumber(), numberSystem)) {
+            errors.rejectValue("thirdNumber", "error.wrong.format");
+            log.warn("Wrong input for third field, number system " + numberSystem);
         }
     }
 

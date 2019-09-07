@@ -1,15 +1,25 @@
 package ua.kpi.ipt.srom.srom_check.services;
 
-import java.math.BigInteger;
+import cc.redberry.rings.bigint.BigInteger;
+import cc.redberry.rings.poly.univar.UnivariatePolynomialZp64;
 
 public interface FieldArithmetic {
 
-    BigInteger findNeutralAdditionElement();
-    BigInteger findNeutralMultiplicationElement();
-    BigInteger adding(BigInteger a, BigInteger b);
-    BigInteger multiplication(BigInteger a, BigInteger b);
-    BigInteger trace(BigInteger el);
-    BigInteger square(BigInteger el);
-    BigInteger pow(BigInteger a,BigInteger b);
-    BigInteger reverse(BigInteger el);
+    UnivariatePolynomialZp64 findNeutralAdditionElement();
+
+    UnivariatePolynomialZp64 findNeutralMultiplicationElement();
+
+    UnivariatePolynomialZp64 adding(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b);
+
+    UnivariatePolynomialZp64 multiplication(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b);
+
+    UnivariatePolynomialZp64 trace(UnivariatePolynomialZp64 el);
+
+    UnivariatePolynomialZp64 square(UnivariatePolynomialZp64 el);
+
+    UnivariatePolynomialZp64 pow(UnivariatePolynomialZp64 a, BigInteger b);
+
+    UnivariatePolynomialZp64 reverse(UnivariatePolynomialZp64 el);
+
+    void calculateAll();
 }

@@ -4,7 +4,7 @@
 <body>
 <div th:replace="navbar.html"></div>
 <div class="container px-5 pt-5">
-    <form action="/calculate" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto" method="post">
+    <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto" method="post">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
                 <label for="numberSystemSelect" th:text="#{message.choose.number.system}"></label>
@@ -59,8 +59,8 @@
                     <div th:replace="fragments::resultCard(res=*{division},resName = 'A / B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')"></div>
                     <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
-                    <div>
-                        <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5" id="cards">
+                    <div id="cards">
+                        <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5">
                             <div class="card shadow p-3 mb-5 bg-white rounded">
                                 <div class="card-body">
                                     <h5 class="card-title text-center"> A<sup>B</sup></h5>
