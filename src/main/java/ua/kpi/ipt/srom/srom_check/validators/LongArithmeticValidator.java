@@ -34,17 +34,17 @@ public class LongArithmeticValidator implements org.springframework.validation.V
 
         if (isNotValidField(longArithmeticDto.getFirstNumber(), numberSystem)) {
             errors.rejectValue("firstNumber", "error.wrong.format");
-            log.warn("Wrong input for first field, number system " + numberSystem);
+            log.warn("Wrong input for first field, number system {}", numberSystem);
         }
 
         if (isNotValidField(longArithmeticDto.getSecondNumber(), numberSystem)) {
             errors.rejectValue("secondNumber", "error.wrong.format");
-            log.warn("Wrong input for second field, number system " + numberSystem);
+            log.warn("Wrong input for second field, number system {}", numberSystem);
         }
 
         if (isNotValidField(longArithmeticDto.getModule(), numberSystem)) {
             errors.rejectValue("module", "error.wrong.format");
-            log.warn("Wrong input for module field, number system " + numberSystem);
+            log.warn("Wrong input for module field, number system {}", numberSystem);
         }
     }
 

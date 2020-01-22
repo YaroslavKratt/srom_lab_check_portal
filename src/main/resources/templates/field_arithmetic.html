@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head">
+<body>
+<div th:replace="navbar.html"></div>
+<div class="container px-2 pt-2">
+    <form action="/calculate-finite-field" th:object="${finiteFieldDto}" modelAttribute="finiteFieldDto"
+          method="post">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="basis" th:text="#{message.choose.basis}"></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="variant" th:text="#{message.choose.variant}"></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="numberSystemSelect" th:text="#{message.choose.number.system}"></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="fnumber" th:text="#{messages.first.number}"></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="snumber" th:text="#{messages.second.number}"></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 ">
+                <label for="module" th:text="#{messages.third.number}"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 form-group">
+                <select class="custom-select " id="basis" name="basis" onchange="removeValidation()">
+                    <option selected value="POLYNOMIAL" th:text="#{basis.polynomial}">POLYNOMIAL</option>
+                    <option th:text="#{basis.normal}" value="NORMAL">NORMAL</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 form-group">
+                <select class="custom-select " id="variant" th:field="*{variant}" onchange="removeValidation()">
+                    <option th:each="variant : ${finiteFieldDto.variantsToPolynomials}" th:value="${variant.key}"
+                            th:text="${variant.key +': ' + variant.value}"></option>
+                </select>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2 form-group">
+                <select class="custom-select " id="numberSystemSelect" th:field="*{numberSystem}"
+                        onchange="removeValidation()">
+                    <option selected value="HEX" th:text="#{number.format.hex}">HEX</option>
+                    <option value="BIN" th:text="#{number.format.bin}">Binary</option>
+                    <option value="DECIMAL" th:text="#{number.format.dec}">Decimal</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-2  form-group">
+                <input type="text" class="form-control" id="fnumber" th:field="*{firstNumber}"
+                       th:classappend="${#fields.hasErrors('firstNumber')}? 'is-invalid'">
+                <p class="invalid-feedback" th:if="${#fields.hasErrors('firstNumber')}" th:errors="*{firstNumber}">
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2  col-2 form-group">
+                <input type="text" class="form-control" id="snumber" th:field="*{secondNumber}"
+                       th:classappend="${#fields.hasErrors('secondNumber')}? 'is-invalid'">
+                <p class="invalid-feedback" th:if="${#fields.hasErrors('secondNumber')}" th:errors="*{secondNumber}">
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2  col-2 form-group">
+                <input type="text" class="form-control" id="module" th:field="*{thirdNumber}"
+                       th:classappend="${#fields.hasErrors('thirdNumber')}? 'is-invalid'">
+                <p class="invalid-feedback" th:if="${#fields.hasErrors('thirdNumber')}" th:errors="*{thirdNumber}">
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary " th:text="#{message.button.calculate}"></button>
+            </div>
+        </div>
+        <div th:if="${calculated}">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
+                    <div th:replace="fragments::resultCard(res=*{multiplication},resName = 'A * B = ')"></div>
+                    <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
+                    <div th:replace="fragments::resultCardWithPow(res=*{pow},A = 'A',B='C',mes='')"></div>
+                    <div th:replace="fragments::resultCard(res=*{trace},resName = 'TRACE(A)= ')"></div>
+                    <div th:replace="fragments::resultCard(res=*{reverse},resName = 'REVERSE(A)= ')"></div>
+
+
+
+
+
+
+                </div>
+        </div>
+    </form>
+</div>
+</body>
+<script th:replace="scripts"></script>
+</html>

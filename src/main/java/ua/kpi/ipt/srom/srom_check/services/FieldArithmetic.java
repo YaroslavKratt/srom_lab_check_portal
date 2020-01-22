@@ -2,6 +2,7 @@ package ua.kpi.ipt.srom.srom_check.services;
 
 import cc.redberry.rings.bigint.BigInteger;
 import cc.redberry.rings.poly.univar.UnivariatePolynomialZp64;
+import ua.kpi.ipt.srom.srom_check.models.FiniteFieldModel;
 
 public interface FieldArithmetic {
 
@@ -9,7 +10,7 @@ public interface FieldArithmetic {
 
     UnivariatePolynomialZp64 findNeutralMultiplicationElement();
 
-    UnivariatePolynomialZp64 adding(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b);
+    UnivariatePolynomialZp64 sum(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b);
 
     UnivariatePolynomialZp64 multiplication(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b);
 
@@ -21,5 +22,5 @@ public interface FieldArithmetic {
 
     UnivariatePolynomialZp64 reverse(UnivariatePolynomialZp64 el);
 
-    void calculateAll();
+    FiniteFieldModel calculateAll(FiniteFieldModel model);
 }
