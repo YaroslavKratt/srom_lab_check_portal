@@ -3,34 +3,34 @@ package ua.kpi.ipt.srom.srom_check.services;
 import cc.redberry.rings.bigint.BigInteger;
 import cc.redberry.rings.poly.FiniteField;
 import cc.redberry.rings.poly.univar.UnivariatePolynomialZp64;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
+import ua.kpi.ipt.srom.srom_check.models.FiniteFieldModel;
+@Slf4j
 @Component
 public class FiniteFieldArithmeticPolynomial implements FieldArithmetic {
     private FiniteField<UnivariatePolynomialZp64> finiteField;
 
-    /*public FiniteFieldArithmeticPolynomial(FiniteField<UnivariatePolynomialZp64> finiteField) {
-        this.finiteField = finiteField;
-    }*/
+
     @Override
     public UnivariatePolynomialZp64 findNeutralAdditionElement() {
-        return null;
+        return finiteField.getOne();
     }
 
     @Override
     public UnivariatePolynomialZp64 findNeutralMultiplicationElement() {
-        return null;
+        return finiteField.getOne();
     }
 
     @Override
-    public UnivariatePolynomialZp64 adding(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b) {
+    public UnivariatePolynomialZp64 sum(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b) {
         return finiteField.add(a,b);
     }
 
     @Override
     public UnivariatePolynomialZp64 multiplication(UnivariatePolynomialZp64 a, UnivariatePolynomialZp64 b) {
         return finiteField.multiply(a,b);
-    }
+  }
 
     @Override
     public UnivariatePolynomialZp64 trace(UnivariatePolynomialZp64 el) {
@@ -50,12 +50,29 @@ public class FiniteFieldArithmeticPolynomial implements FieldArithmetic {
 
     @Override
     public UnivariatePolynomialZp64 reverse(UnivariatePolynomialZp64 el) {
-       return  el.reverse();
+       return  finiteField.reciprocal(el.clone());
     }
 
     @Override
-    public void calculateAll() {
+    public FiniteFieldModel calculateAll(FiniteFieldModel model) {
+        finiteField = model.getFiniteField();
+        UnivariatePolynomialZp64 a = model.getFirstNumber();
+        UnivariatePolynomialZp64 b = model.getSecondNumber();
+        BigInteger c = model.getThirdNumber();
+
+        model.setMultiplication(multiplication(a,b));
+        model.setSquare(square(a));
+        model.setPow(pow(a,c));
+        model.setReverse(reverse(a));
+        model.setSum(sum(a,b));
+        model.setTrace(trace(a));
+        model.setGetNeutralByMultiplication(findNeutralMultiplicationElement());
+        model.setNeutralByAdding(findNeutralAdditionElement());
+
+        return   model;
 
 
     }
+
+
 }

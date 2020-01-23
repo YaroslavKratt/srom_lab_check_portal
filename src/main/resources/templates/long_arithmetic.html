@@ -4,7 +4,8 @@
 <body>
 <div th:replace="navbar.html"></div>
 <div class="container px-5 pt-5">
-    <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto" method="post">
+    <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto"
+          method="post">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
                 <label for="numberSystemSelect" th:text="#{message.choose.number.system}"></label>
@@ -83,6 +84,7 @@
         </div>
     </form>
 </div>
+<div th:replace="footer.html"></div>
 </body>
 <script th:replace="scripts"></script>
 </html>

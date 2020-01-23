@@ -29,3 +29,23 @@ select {
     box-shadow: 0 .5rem 1rem rgba(170, 0, 248, 1);
 !important;
 }
+
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: right;
+}
+
+.footerLinks {
+    padding: 10px;
+    text-align: right;
+    font-size: 10px;
+
+}
+
+.footerLinks ul {
+    padding: 0;
+    margin: 0 10px 0 0;
+}

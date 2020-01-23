@@ -11,7 +11,9 @@ import ua.kpi.ipt.srom.srom_check.models.NumberSystem;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ua.kpi.ipt.srom.srom_check.validators.ValidationConstants.*;
+import static ua.kpi.ipt.srom.srom_check.validators.ValidationConstants.BIN_REGEXP;
+import static ua.kpi.ipt.srom.srom_check.validators.ValidationConstants.DEC_REGEXP;
+import static ua.kpi.ipt.srom.srom_check.validators.ValidationConstants.HEX_REGEXP;
 
 @Service
 @Slf4j
@@ -36,17 +38,17 @@ public class FiniteFieldValidator implements org.springframework.validation.Vali
 
         if (isNotValidField(finiteFieldDto.getFirstNumber(), numberSystem)) {
             errors.rejectValue("firstNumber", "error.wrong.format");
-            log.warn("Wrong input for first field, number system " + numberSystem);
+            log.warn("Wrong input for first field, number system {}", numberSystem);
         }
 
         if (isNotValidField(finiteFieldDto.getSecondNumber(), numberSystem)) {
             errors.rejectValue("secondNumber", "error.wrong.format");
-            log.warn("Wrong input for second field, number system " + numberSystem);
+            log.warn("Wrong input for second field, number system {}", numberSystem);
         }
 
         if (isNotValidField(finiteFieldDto.getThirdNumber(), numberSystem)) {
             errors.rejectValue("thirdNumber", "error.wrong.format");
-            log.warn("Wrong input for third field, number system " + numberSystem);
+            log.warn("Wrong input for third field, number system {}", numberSystem);
         }
     }
 
