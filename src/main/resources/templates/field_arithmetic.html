@@ -30,7 +30,7 @@
             <div class="col-lg-2 col-md-2 col-sm-2 col-2 form-group">
                 <select class="custom-select " id="basis" name="basis" onchange="removeValidation()">
                     <option selected value="POLYNOMIAL" th:text="#{basis.polynomial}">POLYNOMIAL</option>
-                  <!--  <option th:text="#{basis.normal}" value="NORMAL">NORMAL</option>-->
+                    <!--  <option th:text="#{basis.normal}" value="NORMAL">NORMAL</option>-->
                 </select>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-2 form-group">
@@ -64,13 +64,15 @@
                 <p class="invalid-feedback" th:if="${#fields.hasErrors('thirdNumber')}" th:errors="*{thirdNumber}">
             </div>
         </div>
-
-        <div class="row pt-2">
-            <div class="col text-center">
-                <button type="submit" class="btn btn-primary " th:text="#{message.button.calculate}"></button>
+        <div class="button-wrapper">
+            <div class="row pt-2 ">
+                <div class="col text-center ">
+                    <button type="submit" class="btn " id="confirmCalculationButton"
+                            th:text="#{message.button.calculate}"></button>
+                </div>
             </div>
         </div>
-        <div th:if="${calculated}">
+        <div th:if="${calculated}" id="cards">
             <div class="container mt-5">
                 <div class="row justify-content-center">
                     <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
@@ -81,6 +83,7 @@
                     <div th:replace="fragments::resultCard(res=*{reverse},resName = 'INVERSE    (A)= ')"></div>
 
                 </div>
+            </div>
         </div>
     </form>
 </div>

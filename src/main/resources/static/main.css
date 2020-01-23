@@ -3,16 +3,27 @@
     color: #ffffff;
 }
 
-.btn-primary, #languages {
+.btn, #languages {
     background-color: #aa00f8;
-    border-color: #000000;
+    border-color: rgba(0, 0, 0, 0);
     color: #ffffff;
 }
 
-.btn-primary:hover, #languages:hover {
+.btn:hover, #languages:hover {
     background-color: #db13f8;
-    border-color: #000000;
+    border-color: rgba(0, 0, 0, 0);
     color: #ffffff;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #f812a4; !important;
+    border-color: rgba(0, 0, 0, 0); !important;
+    color: #ffffff; !important;
+}
+.button-wrapper{
+    min-height: 62px;
 }
 
 select {

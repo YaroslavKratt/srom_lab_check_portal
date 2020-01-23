@@ -45,13 +45,15 @@
                 <p class="invalid-feedback" th:if="${#fields.hasErrors('module')}" th:errors="*{module}">
             </div>
         </div>
-
-        <div class="row pt-4">
-            <div class="col text-center">
-                <button type="submit" class="btn btn-primary " th:text="#{message.button.calculate}"></button>
+        <div class="button-wrapper">
+            <div class="row pt-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary" id="confirmCalculationButton"
+                            th:text="#{message.button.calculate}"></button>
+                </div>
             </div>
         </div>
-        <div th:if="${calculated}">
+        <div th:if="${calculated}" id="cards">
             <div class="container mt-5">
                 <div class="row justify-content-center">
                     <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
@@ -60,15 +62,13 @@
                     <div th:replace="fragments::resultCard(res=*{division},resName = 'A / B = ')"></div>
                     <div th:replace="fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')"></div>
                     <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
-                    <div id="cards">
-                        <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5">
-                            <div class="card shadow p-3 mb-5 bg-white rounded">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center"> A<sup>B</sup></h5>
-                                    <p class="card-text text-center" id="powText"/>
-                                    <button type="button" class="btn btn-primary pow" id="power"
-                                            th:text="#{message.button.calculate.pow}"/>
-                                </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5">
+                        <div class="card shadow p-3 mb-5 bg-white rounded">
+                            <div class="card-body">
+                                <h5 class="card-title text-center"> A<sup>B</sup></h5>
+                                <p class="card-text text-center" id="powText"></p>
+                                <button type="button" class="btn pow" id="power"
+                                        th:text="#{message.button.calculate.pow}"></button>
                             </div>
                         </div>
                     </div>
