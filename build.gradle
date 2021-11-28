@@ -50,3 +50,9 @@ tasks.withType(JavaCompile) {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
+
+tasks.withType(Jar) {
+    manifest {
+        attributes["Main-Class"] = "ua.kpi.ipt.srom.srom_check.SromCheckApplication"
+    }
+}
