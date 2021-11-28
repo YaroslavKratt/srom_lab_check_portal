@@ -70,9 +70,5 @@ public class FiniteFieldArithmeticPolynomial implements FieldArithmetic {
         model.setNeutralByAdding(findNeutralAdditionElement());
 
         return   model;
-
-
     }
-
-
 }

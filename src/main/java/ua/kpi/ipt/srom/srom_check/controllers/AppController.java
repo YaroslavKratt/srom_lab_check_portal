@@ -81,7 +81,7 @@ public class AppController {
         }
 
 
-        model.addAttribute("finiteFieldDto", ffModelToDto.convert(result));
+        model.addAttribute("finiteFieldDto", ffModelToDto.convert(requireNonNull(result)));
         model.addAttribute("calculated", true);
         return ControllerConstants.View.FINITE_FIELD;
     }
@@ -98,6 +98,7 @@ public class AppController {
                 .calculateAll(requireNonNull(ladDtoToModel.convert(longArithmeticDto)));
 
         model.addAttribute("longArithmeticDto", laModelToDto.convert(longArithmeticModel));
+        log.info(requireNonNull(laModelToDto.convert(longArithmeticModel)).toString());
         model.addAttribute("calculated", true);
         return ControllerConstants.View.LONG_ARITHMETIC;
     }

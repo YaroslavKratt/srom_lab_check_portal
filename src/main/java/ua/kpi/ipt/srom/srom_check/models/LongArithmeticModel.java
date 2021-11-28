@@ -1,14 +1,11 @@
 package ua.kpi.ipt.srom.srom_check.models;
 
-import lombok.*;
-
 import java.math.BigInteger;
+import lombok.Builder;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class LongArithmeticModel {
     private BigInteger firstNumber;
     private BigInteger secondNumber;

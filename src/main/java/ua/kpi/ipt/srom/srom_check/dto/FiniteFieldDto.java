@@ -1,18 +1,18 @@
 package ua.kpi.ipt.srom.srom_check.dto;
 
-import lombok.*;
-import ua.kpi.ipt.srom.srom_check.models.FiniteFieldsVariants;
-
-import javax.validation.constraints.NotEmpty;
-import java.util.Map;
-
 import static ua.kpi.ipt.srom.srom_check.models.FiniteFieldsVariants.VARIANT_TO_POLYNOM;
 
+import java.util.Map;
+import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @Builder
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class FiniteFieldDto {
     public static final Map<String, String> variantsToPolynomials = VARIANT_TO_POLYNOM;
     @NotEmpty(message = "{error.empty.field}")
