@@ -3,19 +3,12 @@ package ua.kpi.ipt.srom.srom_check.models;
 import cc.redberry.rings.bigint.BigInteger;
 import cc.redberry.rings.poly.FiniteField;
 import cc.redberry.rings.poly.univar.UnivariatePolynomialZp64;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.validation.constraints.NotEmpty;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class FiniteFieldModel {
     @NotEmpty
     private UnivariatePolynomialZp64 firstNumber;

@@ -1,14 +1,15 @@
 package ua.kpi.ipt.srom.srom_check.dto;
 
-import lombok.*;
-
 import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Builder
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class LongArithmeticDto {
     @NotEmpty(message = "{error.empty.field}")
     private String firstNumber;
