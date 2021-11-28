@@ -12,7 +12,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+.gradle
+out
 ### IntelliJ IDEA ###
 .idea
 *.iws
