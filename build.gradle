@@ -33,8 +33,4 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
-tasks.withType(Jar) {
-	manifest {
-		attributes["Main-Class"] = "ua.kpi.srom.SromCheckApplication"
-	}
-}
+task stage(dependsOn: ['clean', 'bootJar'])
