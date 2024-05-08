@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="head">
+<head th:replace="~{head}">
 <body>
-<div th:replace="navbar.html"></div>
+<div th:replace="~{navbar.html}"></div>
 <div class="container px-5 pt-5">
     <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto"
           method="post">
@@ -56,12 +56,12 @@
         <div th:if="${calculated}" id="cards">
             <div class="container mt-5">
                 <div class="row justify-content-center">
-                    <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{subtraction},resName = 'A - B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{multiplication},resName = 'A * B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{division},resName = 'A / B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')"></div>
-                    <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{sum},resName = 'A + B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{subtraction},resName = 'A - B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{multiplication},resName = 'A * B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{division},resName = 'A / B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')}"></div>
                     <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5">
                         <div class="card shadow p-3 mb-5 bg-white rounded">
                             <div class="card-body">
@@ -72,19 +72,19 @@
                             </div>
                         </div>
                     </div>
-                    <div th:replace="fragments::resultCard(res=*{gcd},resName = #{message.gcd})"></div>
-                    <div th:replace="fragments::resultCard(res=*{lcm},resName = #{message.lcm})"></div>
-                    <div th:replace="fragments::resultCard(res=*{moduleAdd},resName = '(A + B) mod M= ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{moduleSubtractioc},resName = '(A - B) mod M = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{moduleMult},resName = '(A * B) mod M = ')"></div>
-                    <div th:replace="fragments::resultCardWithPow(res=*{moduleSquare},A = '(A',B='2',mes=') mod M = ')"></div>
-                    <div th:replace="fragments::resultCardWithPow(res=*{modulePow},A = '(A',B='B',mes=') mod M = ')"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{gcd},resName = #{message.gcd})}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{lcm},resName = #{message.lcm})}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{moduleAdd},resName = '(A + B) mod M= ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{moduleSubtractioc},resName = '(A - B) mod M = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{moduleMult},resName = '(A * B) mod M = ')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{moduleSquare},A = '(A',B='2',mes=') mod M = ')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{modulePow},A = '(A',B='B',mes=') mod M = ')}"></div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-<div th:replace="footer.html"></div>
+<div th:replace="~{footer.html}"></div>
 </body>
-<script th:replace="scripts"></script>
+<script th:replace="~{scripts}"></script>
 </html>
