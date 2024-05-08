@@ -12,7 +12,7 @@ function getEnumValue(numberSystemStr) {
 }
 
 $(document).on('click', '#power', function () {
-    var container = $("#cards");
+    const container = $("#cards");
     spinner(container);
     $("#power").hide();
 
@@ -32,10 +32,10 @@ function longPower(a, b) {
         return "0";
     if (b.equals( bigInt.zero))
         return "1";
-    var result = bigInt.one;
-    var binaryB = b.toString(2)
-        .split("")
-        .reverse();
+    let result = bigInt.one;
+    const binaryB = b.toString(2)
+    .split("")
+    .reverse();
 
     for (var i = 0; i < binaryB.length; i++) {
         if (binaryB[i] === '1') {
@@ -62,9 +62,3 @@ function spinner(element) {
         }
     }));
 }
-
-
-
-
-
-

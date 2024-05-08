@@ -4,7 +4,7 @@ var bigInt = function (undefined) {
         DEFAULT_ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
     var supportsNativeBigInt = typeof BigInt === "function";
 
-    function Integer(v, radix, alphabet, caseSensitive) {
+    function Integer(v, radix) {
         if (typeof v === "undefined") return Integer[0];
         if (typeof radix !== "undefined") return +radix === 10 && !alphabet ? parseValue(v) : parseBase(v, radix, alphabet, caseSensitive);
         return parseValue(v)
