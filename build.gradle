@@ -6,12 +6,16 @@ plugins {
 }
 
 group = 'ua.kpi'
-version = '0.0.1-SNAPSHOT'
+version = ''
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
+}
+
+jar {
+	enabled = false
 }
 
 repositories {
