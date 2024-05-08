@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="head">
+<head th:replace="~{head}">
 <body>
-<div th:replace="navbar.html"></div>
+<div th:replace="~{navbar.html}"></div>
 <div class="container px-2 pt-2">
     <form action="/calculate-finite-field" th:object="${finiteFieldDto}" modelAttribute="finiteFieldDto"
           method="post">
@@ -75,20 +75,20 @@
         <div th:if="${calculated}" id="cards">
             <div class="container mt-5">
                 <div class="row justify-content-center">
-                    <div th:replace="fragments::resultCard(res=*{sum},resName = 'A + B = ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{multiplication},resName = 'A * B = ')"></div>
-                    <div th:replace="fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')"></div>
-                    <div th:replace="fragments::resultCardWithPow(res=*{pow},A = 'A',B='C',mes='')"></div>
-                    <div th:replace="fragments::resultCard(res=*{trace},resName = 'TRACE(A)= ')"></div>
-                    <div th:replace="fragments::resultCard(res=*{reverse},resName = 'INVERSE    (A)= ')"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{sum},resName = 'A + B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{multiplication},resName = 'A * B = ')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{pow},A = 'A',B='C',mes='')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{trace},resName = 'TRACE(A)= ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{reverse},resName = 'INVERSE    (A)= ')}"></div>
 
                 </div>
             </div>
         </div>
     </form>
 </div>
-<div th:replace="footer.html"></div>
+<div th:replace="~{footer.html}"></div>
 
 </body>
-<script th:replace="scripts"></script>
+<script th:replace="~{scripts}"></script>
 </html>
