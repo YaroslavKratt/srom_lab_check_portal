@@ -31,7 +31,7 @@ public class LongArithmeticService {
     try {
       return a.divide(b);
     } catch (ArithmeticException e) {
-      log.warn("a /b: " + e.getLocalizedMessage());
+      log.warn("a /b: {}", e.getLocalizedMessage());
       return null;
     }
   }
@@ -40,7 +40,7 @@ public class LongArithmeticService {
     try {
       return a.mod(b);
     } catch (ArithmeticException e) {
-      log.warn("a mod b: " + e.getLocalizedMessage());
+      log.warn("a mod b: {}", e.getLocalizedMessage());
       return null;
     }
   }
@@ -57,7 +57,7 @@ public class LongArithmeticService {
 
       return mul.divide(gcd);
     } catch (ArithmeticException e) {
-      log.warn("lcm: " + e.getLocalizedMessage());
+      log.warn("lcm: {}", e.getLocalizedMessage());
       return BigInteger.ZERO;
     }
   }
