@@ -1,24 +1,25 @@
-# Use Amazon Corretto 21 as base image
+# ---- Stage 1: Build with Gradle ----
 FROM gradle:8.5-jdk21 AS builder
 
 # Copy project files
 COPY --chown=gradle:gradle . /home/gradle/project
 WORKDIR /home/gradle/project
 
-# Build the app
+# Build the app (skip tests for speed)
 RUN gradle clean build -x test
 
+# ---- Stage 2: Minimal runtime image ----
 FROM amazoncorretto:21
-
 
 # Set working directory
 WORKDIR /app
 
-# Copy the built JAR into the image
-COPY build/libs/srom-0.0.1-SNAPSHOT.jar app.jar
+# Copy the built JAR from the builder stage
+COPY --from=builder /home/gradle/project/build/libs/srom-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the application port
+# Cloud Run expects the app to listen on $PORT
+ENV PORT=8080
 EXPOSE 8080
 
-# Run the JAR
+# Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
