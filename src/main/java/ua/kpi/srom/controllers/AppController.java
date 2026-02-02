@@ -2,8 +2,8 @@ package ua.kpi.srom.controllers;
 
 import static java.util.Objects.requireNonNull;
 
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
@@ -24,37 +24,33 @@ import ua.kpi.srom.services.LongArithmeticService;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class AppController {
-  @Resource private LongArithmeticService longArithmeticService;
+  private final LongArithmeticService longArithmeticService;
+  private final FieldArithmetic finiteFieldArithmeticPolynomial;
 
-  @Resource private FieldArithmetic finiteFieldArithmeticPolynomial;
-
-  @Resource
   @Qualifier("longArithmeticValidator")
-  private Validator longArithmeticValidator;
+  private final Validator longArithmeticValidator;
 
-  @Resource
   @Qualifier("finiteFieldValidator")
-  private Validator finiteFieldValidator;
+  private final Validator finiteFieldValidator;
 
-  @Resource private Converter<LongArithmeticDto, LongArithmeticModel> ladDtoToModel;
-
-  @Resource private Converter<LongArithmeticModel, LongArithmeticDto> laModelToDto;
-
-  @Resource private Converter<FiniteFieldDto, FiniteFieldModel> ffDtoToModel;
-
-  @Resource private Converter<FiniteFieldModel, FiniteFieldDto> ffModelToDto;
+  private final Converter<LongArithmeticDto, LongArithmeticModel> ladDtoToModel;
+  private final Converter<LongArithmeticModel, LongArithmeticDto> laModelToDto;
+  private final Converter<FiniteFieldDto, FiniteFieldModel> ffDtoToModel;
+  private final Converter<FiniteFieldModel, FiniteFieldDto> ffModelToDto;
 
   @GetMapping("/")
   public String getLongArithmeticPage(Model model) {
     model.addAttribute("longArithmeticDto", new LongArithmeticDto());
+    model.addAttribute("currentPage", "long-arithmetic");
     return ControllerConstants.View.LONG_ARITHMETIC;
   }
 
   @GetMapping(value = "/calculate-finite-field")
   public String getFiniteFieldPage(Model model) {
     model.addAttribute("finiteFieldDto", new FiniteFieldDto());
-
+    model.addAttribute("currentPage", "field-arithmetic");
     return ControllerConstants.View.FINITE_FIELD;
   }
 
@@ -65,6 +61,7 @@ public class AppController {
       Model model) {
 
     finiteFieldValidator.validate(finiteFieldDto, bindingResult);
+    model.addAttribute("currentPage", "field-arithmetic");
     if (bindingResult.hasErrors()) return ControllerConstants.View.FINITE_FIELD;
     FiniteFieldModel result = null;
 
@@ -83,6 +80,7 @@ public class AppController {
       BindingResult bindingResult,
       Model model) {
     longArithmeticValidator.validate(longArithmeticDto, bindingResult);
+    model.addAttribute("currentPage", "long-arithmetic");
     if (bindingResult.hasErrors()) return ControllerConstants.View.LONG_ARITHMETIC;
 
     LongArithmeticModel longArithmeticModel =

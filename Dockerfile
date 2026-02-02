@@ -30,7 +30,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 WORKDIR /app
 
 # Copy the built artifact from build stage
-COPY --from=build /app/build/libs/srom-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 # Change ownership to non-root user
 RUN chown -R spring:spring /app
