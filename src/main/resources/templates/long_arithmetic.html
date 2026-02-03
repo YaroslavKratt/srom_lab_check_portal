@@ -1,90 +1,157 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{head}">
+<head th:replace="~{head}"></head>
 <body>
+
+<!-- Navbar -->
 <div th:replace="~{navbar.html}"></div>
-<div class="container px-5 pt-5">
-    <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" modelAttribute="longArithmeticDto"
-          method="post">
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
-                <label for="numberSystemSelect" th:text="#{message.choose.number.system}"></label>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
-                <label for="fnumber" th:text="#{messages.first.number}"></label>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
-                <label for="snumber" th:text="#{messages.second.number}"></label>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 ">
-                <label for="module" th:text="#{messages.module.number}"></label>
-            </div>
+
+<!-- Main Content -->
+<div class="container px-3 py-4">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="page-title" style="color: #1e293b; font-weight: 700;" th:text="#{page.navbar.long.arithmetic}">Long Arithmetic Calculator</h2>
+            <p class="page-subtitle" style="color: #64748b;" th:text="#{message.subtitle.long.arithmetic}">Enter values to calculate arithmetic operations</p>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 form-group">
-                <select class="custom-select " id="numberSystemSelect" th:field="*{numberSystem}"
-                        onchange="removeValidation()">
-                    <option selected value="HEX" th:text="#{number.format.hex}">HEX</option>
-                    <option value="BIN" th:text="#{number.format.bin}">Binary</option>
-                    <option value="DECIMAL" th:text="#{number.format.dec}">Decimal</option>
-                </select>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
-                <input type="text" class="form-control" id="fnumber" th:field="*{firstNumber}"
-                       th:classappend="${#fields.hasErrors('firstNumber')}? 'is-invalid'">
-                <p class="invalid-feedback" th:if="${#fields.hasErrors('firstNumber')}" th:errors="*{firstNumber}">
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3  col-3 form-group">
-                <input type="text" class="form-control" id="snumber" th:field="*{secondNumber}"
-                       th:classappend="${#fields.hasErrors('secondNumber')}? 'is-invalid'">
-                <p class="invalid-feedback" th:if="${#fields.hasErrors('secondNumber')}" th:errors="*{secondNumber}">
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3  col-3 form-group">
-                <input type="text" class="form-control" id="module" th:field="*{module}"
-                       th:classappend="${#fields.hasErrors('module')}? 'is-invalid'">
-                <p class="invalid-feedback" th:if="${#fields.hasErrors('module')}" th:errors="*{module}">
-            </div>
-        </div>
-        <div class="button-wrapper">
-            <div class="row pt-4">
-                <div class="col text-center">
-                    <button type="submit" class="btn" id="confirmCalculationButton"
-                            th:text="#{message.button.calculate}"></button>
+    </div>
+
+    <!-- Form -->
+    <form action="/calculate-long-arithmetic" th:object="${longArithmeticDto}" method="post">
+        <!-- Input Card -->
+        <div class="card shadow-sm mb-4 form-card" style="border-radius: 1rem; border: none;">
+            <div class="card-body p-4">
+                <div class="row">
+                    <!-- Number System -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                        <div class="form-group">
+                            <label for="numberSystemSelect" th:text="#{message.choose.number.system}" class="form-label">Number System</label>
+                            <select class="form-control custom-select" id="numberSystemSelect" th:field="*{numberSystem}">
+                                <option value="HEX" th:text="#{number.format.hex}">HEX</option>
+                                <option value="BIN" th:text="#{number.format.bin}">Binary</option>
+                                <option value="DECIMAL" th:text="#{number.format.dec}">Decimal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- First Number -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                        <div class="form-group">
+                            <label for="fnumber" th:text="#{messages.first.number}" class="form-label">First Number</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="fnumber"
+                                   th:field="*{firstNumber}"
+                                   th:classappend="${#fields.hasErrors('firstNumber')} ? 'is-invalid'"
+                                   th:placeholder="#{placeholder.first.number}" />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstNumber')}" th:errors="*{firstNumber}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Second Number -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                        <div class="form-group">
+                            <label for="snumber" th:text="#{messages.second.number}" class="form-label">Second Number</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="snumber"
+                                   th:field="*{secondNumber}"
+                                   th:classappend="${#fields.hasErrors('secondNumber')} ? 'is-invalid'"
+                                   th:placeholder="#{placeholder.second.number}" />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('secondNumber')}" th:errors="*{secondNumber}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Module -->
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                        <div class="form-group">
+                            <label for="module" th:text="#{messages.module.number}" class="form-label">Modulus</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="module"
+                                   th:field="*{module}"
+                                   th:classappend="${#fields.hasErrors('module')} ? 'is-invalid'"
+                                   th:placeholder="#{placeholder.modulus}" />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('module')}" th:errors="*{module}"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Calculate Button -->
+        <div class="button-wrapper">
+            <div class="row">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" id="confirmCalculationButton" th:text="#{message.button.calculate}">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
         <div th:if="${calculated}" id="cards">
             <div class="container mt-5">
                 <div class="row justify-content-center">
-                    <div th:replace="~{fragments::resultCard(res=*{sum},resName = 'A + B = ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{subtraction},resName = 'A - B = ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{multiplication},resName = 'A * B = ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{division},resName = 'A / B = ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{moduleRes},resName = 'A mod B = ')}"></div>
-                    <div th:replace="~{fragments::resultCardWithPow(res=*{square},A = 'A',B='2',mes='')}"></div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 mt-5 mt-5">
-                        <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div th:replace="~{fragments::resultCard(res=*{sum}, resName='A + B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{subtraction}, resName='A - B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{multiplication}, resName='A * B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{division}, resName='A / B = ')}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{moduleRes}, resName='A mod B = ')}"></div>
+                    <div th:replace="~{fragments::resultCardWithPow(res=*{square}, A='A', B='2', mes='')}"></div>
+
+                    <!-- Power Calculation Card -->
+                    <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow result-card">
                             <div class="card-body">
-                                <h5 class="card-title text-center"> A<sup>B</sup></h5>
-                                <p class="card-text text-center" id="powText"></p>
-                                <button type="button" class="btn pow" id="power"
-                                        th:text="#{message.button.calculate.pow}"></button>
+                                <div class="result-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                                        <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z"/>
+                                    </svg>
+                                </div>
+                                <h5 class="card-title">A<sup>B</sup></h5>
+                                <div class="result-value">
+                                    <div style="padding: 1rem; background: var(--color-gray-50); border-radius: var(--radius-md); min-height: 3rem; margin-bottom: 0.75rem;">
+                                        <p class="card-text" id="powText" style="margin: 0; font-family: var(--font-mono); font-size: 0.875rem; word-break: break-word;"></p>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm pow" id="power" th:text="#{message.button.calculate.pow}" style="width: 100%;">Calculate Power</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div th:replace="~{fragments::resultCard(res=*{gcd},resName = #{message.gcd})}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{lcm},resName = #{message.lcm})}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{moduleAdd},resName = '(A + B) mod M= ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{moduleSubtractioc},resName = '(A - B) mod M = ')}"></div>
-                    <div th:replace="~{fragments::resultCard(res=*{moduleMult},resName = '(A * B) mod M = ')}"></div>
-                    <div th:replace="~{fragments::resultCardWithPow(res=*{moduleSquare},A = '(A',B='2',mes=') mod M = ')}"></div>
-                    <div th:replace="~{fragments::resultCardWithPow(res=*{modulePow},A = '(A',B='B',mes=') mod M = ')}"></div>
+
+                    <div th:replace="~{fragments::resultCard(res=*{gcd}, resName=#{message.gcd})}"></div>
+                    <div th:replace="~{fragments::resultCard(res=*{lcm}, resName=#{message.lcm})}"></div>
+
+                    <!-- Modular arithmetic operations (only shown when module is provided) -->
+                    <div th:if="${module != null and module != ''}" th:replace="~{fragments::resultCard(res=*{moduleAdd}, resName='(A + B) mod M = ')}"></div>
+                    <div th:if="${module != null and module != ''}" th:replace="~{fragments::resultCard(res=*{moduleSubtractioc}, resName='(A - B) mod M = ')}"></div>
+                    <div th:if="${module != null and module != ''}" th:replace="~{fragments::resultCard(res=*{moduleMult}, resName='(A * B) mod M = ')}"></div>
+                    <div th:if="${module != null and module != ''}" th:replace="~{fragments::resultCardWithPow(res=*{moduleSquare}, A='(A', B='2', mes=') mod M = ')}"></div>
+                    <div th:if="${module != null and module != ''}" th:replace="~{fragments::resultCardWithPow(res=*{modulePow}, A='(A', B='B', mes=') mod M = ')}"></div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<!-- Footer -->
 <div th:replace="~{footer.html}"></div>
-</body>
+
+<!-- Localized messages for JavaScript -->
+<script th:inline="javascript">
+    window.i18n = {
+        calculating: /*[[#{error.calculating}]]*/ 'Calculating...',
+        powerTooLarge: /*[[#{error.power.too.large}]]*/ 'Result is too large for browser memory. Try smaller numbers or use modular exponentiation.',
+        powerStack: /*[[#{error.power.stack}]]*/ 'Calculation is too complex. Try smaller exponent values.',
+        requiredFields: /*[[#{error.power.required.fields}]]*/ 'Required elements not found',
+        enterBoth: /*[[#{error.power.enter.both}]]*/ 'Please enter both numbers',
+        libraryMissing: /*[[#{error.power.library.missing}]]*/ 'BigInteger library not loaded'
+    };
+</script>
+
+<!-- Scripts -->
 <script th:replace="~{scripts}"></script>
+
+</body>
 </html>

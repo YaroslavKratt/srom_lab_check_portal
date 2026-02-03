@@ -1,33 +1,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">
-        <img th:src="@{/favicon.ico}" width="45" height="45"
-             class="d-inline-block align-top" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/" th:text="#{page.navbar.long.arithmetic}"> <span
-                    class="sr-only">(current)</span></a>
-           <a class="nav-item nav-link" th:href="@{/calculate-finite-field}" th:text="#{page.navbar.field.arithmetic}"></a>
-        </div>
-        <ul class="nav navbar-nav ml-auto">
-            <li class="dropdown show">
-                <a type="button" class=" btn  dropdown-toggle" id="languages" data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false">
-
-                <text th:switch="__${#locale.language}__">
-                    <text th:case="en" th:text="#{page.navbar.lang.en}"></text>
-                    <text th:case="ua" th:text="#{page.navbar.lang.ua}"></text>
-                </text>
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/" style="font-weight: 700; color: var(--color-primary); font-size: 1.25rem;">
+            <img th:src="@{/favicon.ico}" width="40" height="40" class="d-inline-block align-top me-2" alt="" style="border-radius: 0.5rem;">
+            <span class="d-none d-md-inline">SROM Lab</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mx-auto">
+                <a class="nav-item nav-link"
+                   th:classappend="${currentPage == 'long-arithmetic' ? 'active' : ''}"
+                   href="/"
+                   th:text="#{page.navbar.long.arithmetic}"
+                   style="font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.25rem; border-radius: 0.5rem;">
+                    Long Arithmetic
                 </a>
-                <div class="dropdown-menu">
-                        <a class="dropdown-item"  th:href="@{/?lang=en}" th:text="#{page.navbar.lang.en}"></a>
-                        <a class="dropdown-item"  th:href="@{/?lang=ua}" th:text="#{page.navbar.lang.ua}"></a>
-                </div>
-            </li>
-        </ul>
+                <a class="nav-item nav-link"
+                   th:classappend="${currentPage == 'field-arithmetic' ? 'active' : ''}"
+                   th:href="@{/calculate-finite-field}"
+                   th:text="#{page.navbar.field.arithmetic}"
+                   style="font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.25rem; border-radius: 0.5rem;">
+                    Finite Field
+                </a>
+            </div>
+            <ul class="nav navbar-nav ml-auto">
+                <li class="dropdown">
+                    <a class="btn btn-sm dropdown-toggle d-flex align-items-center" id="languages" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" style="padding: 0.5rem 1rem; font-size: 0.9rem; gap: 0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
+                        </svg>
+                        <span th:switch="__${#locale.language}__">
+                            <span th:case="en" th:text="#{page.navbar.lang.en}">English</span>
+                            <span th:case="ua" th:text="#{page.navbar.lang.ua}">Українська</span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 150px;">
+                        <a class="dropdown-item" th:href="@{/?lang=en}" th:text="#{page.navbar.lang.en}" style="padding: 0.5rem 1rem;">English</a>
+                        <a class="dropdown-item" th:href="@{/?lang=ua}" th:text="#{page.navbar.lang.ua}" style="padding: 0.5rem 1rem;">Українська</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>

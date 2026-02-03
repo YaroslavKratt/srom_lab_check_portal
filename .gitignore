@@ -12,10 +12,15 @@ target/
 .settings
 .springBeans
 .sts4-cache
-.gradle
-out
+
+### Gradle ###
+.gradle/
+build/
+out/
+bin/
+
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -26,7 +31,10 @@ out
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
 
 ### VS Code ###
 .vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db

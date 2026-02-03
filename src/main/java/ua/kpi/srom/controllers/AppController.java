@@ -2,11 +2,15 @@ package ua.kpi.srom.controllers;
 
 import static java.util.Objects.requireNonNull;
 
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,8 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ua.kpi.srom.dto.FiniteFieldDto;
 import ua.kpi.srom.dto.LongArithmeticDto;
 import ua.kpi.srom.models.BASIS;
@@ -24,37 +30,33 @@ import ua.kpi.srom.services.LongArithmeticService;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class AppController {
-  @Resource private LongArithmeticService longArithmeticService;
+  private final LongArithmeticService longArithmeticService;
+  private final FieldArithmetic finiteFieldArithmeticPolynomial;
 
-  @Resource private FieldArithmetic finiteFieldArithmeticPolynomial;
-
-  @Resource
   @Qualifier("longArithmeticValidator")
-  private Validator longArithmeticValidator;
+  private final Validator longArithmeticValidator;
 
-  @Resource
   @Qualifier("finiteFieldValidator")
-  private Validator finiteFieldValidator;
+  private final Validator finiteFieldValidator;
 
-  @Resource private Converter<LongArithmeticDto, LongArithmeticModel> ladDtoToModel;
-
-  @Resource private Converter<LongArithmeticModel, LongArithmeticDto> laModelToDto;
-
-  @Resource private Converter<FiniteFieldDto, FiniteFieldModel> ffDtoToModel;
-
-  @Resource private Converter<FiniteFieldModel, FiniteFieldDto> ffModelToDto;
+  private final Converter<LongArithmeticDto, LongArithmeticModel> ladDtoToModel;
+  private final Converter<LongArithmeticModel, LongArithmeticDto> laModelToDto;
+  private final Converter<FiniteFieldDto, FiniteFieldModel> ffDtoToModel;
+  private final Converter<FiniteFieldModel, FiniteFieldDto> ffModelToDto;
 
   @GetMapping("/")
   public String getLongArithmeticPage(Model model) {
     model.addAttribute("longArithmeticDto", new LongArithmeticDto());
+    model.addAttribute("currentPage", "long-arithmetic");
     return ControllerConstants.View.LONG_ARITHMETIC;
   }
 
   @GetMapping(value = "/calculate-finite-field")
   public String getFiniteFieldPage(Model model) {
     model.addAttribute("finiteFieldDto", new FiniteFieldDto());
-
+    model.addAttribute("currentPage", "field-arithmetic");
     return ControllerConstants.View.FINITE_FIELD;
   }
 
@@ -65,6 +67,7 @@ public class AppController {
       Model model) {
 
     finiteFieldValidator.validate(finiteFieldDto, bindingResult);
+    model.addAttribute("currentPage", "field-arithmetic");
     if (bindingResult.hasErrors()) return ControllerConstants.View.FINITE_FIELD;
     FiniteFieldModel result = null;
 
@@ -77,12 +80,51 @@ public class AppController {
     return ControllerConstants.View.FINITE_FIELD;
   }
 
+  @PostMapping(value = "/api/calculate-finite-field")
+  @ResponseBody
+  public CompletableFuture<ResponseEntity<Map<String, Object>>> calculateFiniteFieldAsync(
+      @RequestBody FiniteFieldDto finiteFieldDto) {
+
+    return CompletableFuture.supplyAsync(
+        () -> {
+          Map<String, Object> response = new HashMap<>();
+          try {
+            FiniteFieldModel result = null;
+
+            if (finiteFieldDto.getBasis() == null
+                || finiteFieldDto.getBasis().equals(BASIS.POLYNOMIAL.toString())) {
+              finiteFieldDto.setBasis(BASIS.POLYNOMIAL.toString());
+              result =
+                  finiteFieldArithmeticPolynomial.calculateAll(
+                      ffDtoToModel.convert(finiteFieldDto));
+            }
+
+            FiniteFieldDto resultDto = ffModelToDto.convert(requireNonNull(result));
+            response.put("success", true);
+            response.put("sum", resultDto.getSum());
+            response.put("multiplication", resultDto.getMultiplication());
+            response.put("square", resultDto.getSquare());
+            response.put("pow", resultDto.getPow());
+            response.put("trace", resultDto.getTrace());
+            response.put("reverse", resultDto.getReverse());
+
+            return ResponseEntity.ok(response);
+          } catch (Exception e) {
+            log.error("Error calculating finite field: ", e);
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+          }
+        });
+  }
+
   @PostMapping(value = "/calculate-long-arithmetic")
   public String calculateLongArithmetic(
       @Valid @ModelAttribute("longArithmeticDto") LongArithmeticDto longArithmeticDto,
       BindingResult bindingResult,
       Model model) {
     longArithmeticValidator.validate(longArithmeticDto, bindingResult);
+    model.addAttribute("currentPage", "long-arithmetic");
     if (bindingResult.hasErrors()) return ControllerConstants.View.LONG_ARITHMETIC;
 
     LongArithmeticModel longArithmeticModel =

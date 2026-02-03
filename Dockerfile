@@ -30,7 +30,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 WORKDIR /app
 
 # Copy the built artifact from build stage
-COPY --from=build /app/build/libs/srom-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 # Change ownership to non-root user
 RUN chown -R spring:spring /app
@@ -48,5 +48,5 @@ EXPOSE 8080
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Run the application
-CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=$PORT -Dserver.http.timeout=300 -jar app.jar"]
+# Run the application with prod profile
+CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=$PORT -Dspring.profiles.active=prod -Dserver.tomcat.connection-timeout=300000 -jar app.jar"]
