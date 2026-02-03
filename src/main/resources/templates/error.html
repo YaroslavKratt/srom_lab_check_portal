@@ -55,10 +55,13 @@
                     </button>
                 </div>
 
-                <!-- Help Text -->
-                <p class="help-text mt-4" style="font-size: 0.875rem; color: var(--color-gray-500);">
-                    <span th:text="#{error.help.text}">If this problem persists, please contact support.</span>
-                </p>
+                <!-- Help Text with Telegram Link -->
+                <div class="help-text mt-4" style="font-size: 0.875rem; color: var(--color-gray-500); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span th:text="#{error.help.text}">If this problem persists, please contact me on Telegram.</span>
+                    <a href="https://t.me/d_ooh" target="_blank" class="telegram-link" style="display: inline-flex; align-items: center;">
+                        <img src="/telegram_icon.png" alt="Telegram" style="width: 24px; height: 24px; border-radius: 50%; filter: sepia(1) saturate(5) hue-rotate(210deg) brightness(0.9);">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
