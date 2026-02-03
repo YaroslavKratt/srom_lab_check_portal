@@ -1,22 +1,114 @@
 <!DOCTYPE HTML>
-<html lang="ua" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{head}">
-
-<div th:replace="~{navbar.html}"></div>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{head}"></head>
 <body>
-<div class="container  vertical-center">
-    <div class=" text-center justify-content-center">
-        <big style="font-size:120px; color:red">сломал, пиши теперь в телегу и больше не ломай</big>
-        <div class="row">
-            <div class="col">
-                <a href="/" type="button" class=" btn btn-primary"><big style="font-size:80px"> НЕ ЛОМАТЬ</big></a>
+
+<!-- Navbar -->
+<div th:replace="~{navbar.html}"></div>
+
+<!-- Error Content -->
+<div class="container px-3 py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="error-container text-center">
+                <!-- Error Icon -->
+                <div class="error-icon mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16" style="color: var(--color-warning);">
+                        <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+                        <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+                    </svg>
+                </div>
+
+                <!-- Error Code -->
+                <h1 class="error-code mb-3" th:text="${status} ?: '500'" style="font-size: 4rem; font-weight: 700; color: var(--color-gray-800);">500</h1>
+
+                <!-- Error Title -->
+                <h2 class="error-title mb-3" style="font-size: 1.75rem; font-weight: 600; color: var(--color-gray-700);">
+                    <span th:if="${status == 404}" th:text="#{error.404.title}">Page Not Found</span>
+                    <span th:if="${status == 403}" th:text="#{error.403.title}">Access Denied</span>
+                    <span th:if="${status == 500}" th:text="#{error.500.title}">Internal Server Error</span>
+                    <span th:if="${status != 404 && status != 403 && status != 500}" th:text="#{error.general.title}">Something Went Wrong</span>
+                </h2>
+
+                <!-- Error Message -->
+                <p class="error-message mb-4" style="font-size: 1.125rem; color: var(--color-gray-600); line-height: 1.6;">
+                    <span th:if="${status == 404}" th:text="#{error.404.message}">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</span>
+                    <span th:if="${status == 403}" th:text="#{error.403.message}">You don't have permission to access this resource.</span>
+                    <span th:if="${status == 500}" th:text="#{error.500.message}">We're sorry, but something went wrong on our end. Our team has been notified and is working to fix the issue.</span>
+                    <span th:if="${status != 404 && status != 403 && status != 500}" th:text="#{error.general.message}">An unexpected error occurred. Please try again later.</span>
+                </p>
+
+                <!-- Error Details (only in development) -->
+                <div th:if="${message != null && message != ''}" class="error-details mb-4" style="background: var(--color-gray-50); border-radius: var(--radius-md); padding: 1rem; margin: 1.5rem 0;">
+                    <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-gray-700); margin: 0; word-break: break-word;">
+                        <strong>Details:</strong> <span th:text="${message}"></span>
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="error-actions">
+                    <a href="/" class="btn btn-primary btn-lg me-2 mb-2" th:text="#{error.button.home}" style="min-width: 150px;">
+                        Go Home
+                    </a>
+                    <button onclick="window.history.back()" class="btn btn-outline-secondary btn-lg mb-2" th:text="#{error.button.back}" style="min-width: 150px;">
+                        Go Back
+                    </button>
+                </div>
+
+                <!-- Help Text -->
+                <p class="help-text mt-4" style="font-size: 0.875rem; color: var(--color-gray-500);">
+                    <span th:text="#{error.help.text}">If this problem persists, please contact support.</span>
+                </p>
             </div>
         </div>
     </div>
-    <audio autoplay>
-        <source src="505error.mp3" type="audio/ogg">
-    </audio>
 </div>
-<footer th:replace="~{footer.html}"/>
+
+<!-- Footer -->
+<div th:replace="~{footer.html}"></div>
+
+<!-- Scripts -->
+<script th:replace="~{scripts}"></script>
+
+<style>
+    .error-container {
+        padding: 3rem 1.5rem;
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .error-icon svg {
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    }
+
+    .error-code {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .btn-outline-secondary {
+        border-color: var(--color-gray-300);
+        color: var(--color-gray-700);
+    }
+
+    .btn-outline-secondary:hover {
+        background: var(--color-gray-100);
+        border-color: var(--color-gray-400);
+        color: var(--color-gray-800);
+    }
+</style>
+
 </body>
 </html>

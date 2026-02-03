@@ -3,10 +3,14 @@ package ua.kpi.srom.controllers;
 import static java.util.Objects.requireNonNull;
 
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,8 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ua.kpi.srom.dto.FiniteFieldDto;
 import ua.kpi.srom.dto.LongArithmeticDto;
 import ua.kpi.srom.models.BASIS;
@@ -72,6 +78,44 @@ public class AppController {
     model.addAttribute("finiteFieldDto", ffModelToDto.convert(requireNonNull(result)));
     model.addAttribute("calculated", true);
     return ControllerConstants.View.FINITE_FIELD;
+  }
+
+  @PostMapping(value = "/api/calculate-finite-field")
+  @ResponseBody
+  public CompletableFuture<ResponseEntity<Map<String, Object>>> calculateFiniteFieldAsync(
+      @RequestBody FiniteFieldDto finiteFieldDto) {
+
+    return CompletableFuture.supplyAsync(
+        () -> {
+          Map<String, Object> response = new HashMap<>();
+          try {
+            FiniteFieldModel result = null;
+
+            if (finiteFieldDto.getBasis() == null
+                || finiteFieldDto.getBasis().equals(BASIS.POLYNOMIAL.toString())) {
+              finiteFieldDto.setBasis(BASIS.POLYNOMIAL.toString());
+              result =
+                  finiteFieldArithmeticPolynomial.calculateAll(
+                      ffDtoToModel.convert(finiteFieldDto));
+            }
+
+            FiniteFieldDto resultDto = ffModelToDto.convert(requireNonNull(result));
+            response.put("success", true);
+            response.put("sum", resultDto.getSum());
+            response.put("multiplication", resultDto.getMultiplication());
+            response.put("square", resultDto.getSquare());
+            response.put("pow", resultDto.getPow());
+            response.put("trace", resultDto.getTrace());
+            response.put("reverse", resultDto.getReverse());
+
+            return ResponseEntity.ok(response);
+          } catch (Exception e) {
+            log.error("Error calculating finite field: ", e);
+            response.put("success", false);
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+          }
+        });
   }
 
   @PostMapping(value = "/calculate-long-arithmetic")

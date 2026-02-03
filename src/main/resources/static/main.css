@@ -99,12 +99,14 @@ body {
     padding: 0.625rem 0.875rem;
     font-size: 0.9375rem;
     line-height: 1.5;
+    height: calc(2.5rem + 4px);
     color: var(--color-gray-900);
     background-color: white;
     border: 2px solid var(--color-gray-300);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
     appearance: none;
+    vertical-align: middle;
 }
 
 .form-control:focus,
@@ -130,10 +132,20 @@ body {
 .form-select,
 .custom-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
-    background-position: right 0.5rem center;
+    background-position: right 0.75rem center;
     background-repeat: no-repeat;
-    background-size: 1.5rem 1.5rem;
+    background-size: 1.25rem 1.25rem;
     padding-right: 2.5rem;
+    padding-left: 0.875rem;
+    text-align: left;
+    text-align-last: left;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.custom-select option {
+    padding: 0.5rem;
+    text-align: left;
 }
 
 .invalid-feedback {
@@ -274,6 +286,7 @@ body {
 .result-card {
     height: 100%;
     min-height: 280px;
+    max-height: 320px;
     min-width: 280px;
     width: 100%;
 }
@@ -322,6 +335,8 @@ body {
     display: block;
     width: 100%;
     min-width: 0;
+    max-height: 120px;
+    overflow-y: auto;
 }
 
 /* Grid System - Work with Bootstrap */
@@ -330,6 +345,16 @@ body {
     flex-wrap: wrap !important;
     margin-left: -0.75rem;
     margin-right: -0.75rem;
+    align-items: stretch;
+}
+
+/* Ensure result cards grid is stable */
+#cards .row {
+    align-items: stretch;
+}
+
+#cards .row > [class*="col-"] {
+    display: flex;
 }
 
 .col,
@@ -427,10 +452,13 @@ body {
     height: 2.5rem;
     border-radius: var(--radius-md);
     transition: transform var(--transition-base);
+    /* Tint to match primary color (indigo) */
+    filter: sepia(1) saturate(5) hue-rotate(210deg) brightness(0.9);
 }
 
 .navbar-brand:hover img {
     transform: rotate(5deg);
+    filter: sepia(1) saturate(6) hue-rotate(210deg) brightness(1);
 }
 
 .nav-link {
@@ -456,17 +484,24 @@ body {
     border-radius: var(--radius-md);
     padding: 0.5rem 0;
     margin-top: 0.5rem !important;
+    min-width: 140px;
+    text-align: left;
 }
 
 .dropdown-item {
     padding: 0.5rem 1rem;
     color: var(--color-gray-700);
     transition: all var(--transition-fast);
+    text-align: left;
 }
 
 .dropdown-item:hover {
     background-color: var(--color-primary);
     color: #ffffff;
+}
+
+.dropdown-menu-right {
+    text-align: left;
 }
 
 /* Language Dropdown Button */
@@ -475,9 +510,11 @@ body {
     background: white;
     color: var(--color-gray-700);
     transition: all var(--transition-base);
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
+    text-align: center;
 }
 
 .dropdown .btn:hover,
@@ -490,6 +527,11 @@ body {
 
 .dropdown .btn svg {
     flex-shrink: 0;
+}
+
+.dropdown .btn span {
+    display: inline-flex;
+    align-items: center;
 }
 
 /* Navbar alignment fix */
@@ -518,6 +560,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    list-style: none;
+    gap: 0.75rem;
+}
+
+.footerLinks li {
+    list-style: none;
+}
+
+.footerLinks img {
+    filter: sepia(1) saturate(5) hue-rotate(210deg) brightness(0.9);
+    transition: all var(--transition-base);
+    border-radius: 50%;
+}
+
+.footerLinks a:hover img {
+    filter: sepia(1) saturate(6) hue-rotate(210deg) brightness(1);
+    transform: scale(1.1);
 }
 
 .footer-telegram-link {

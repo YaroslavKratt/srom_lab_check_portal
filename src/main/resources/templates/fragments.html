@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Result Card Fragment -->
-<div th:fragment="resultCard(res,resName)" th:if="${res != null}">
+<th:block th:fragment="resultCard(res,resName)" th:if="${res != null}">
     <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
         <div class="card shadow result-card">
             <div class="card-body">
@@ -18,10 +18,10 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
 
 <!-- Result Card with Power Fragment -->
-<div th:fragment="resultCardWithPow(res,A,B,mes)" th:if="${res != null}">
+<th:block th:fragment="resultCardWithPow(res,A,B,mes)" th:if="${res != null}">
     <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
         <div class="card shadow result-card">
             <div class="card-body">
@@ -40,6 +40,6 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
 
 </html>
