@@ -15,13 +15,20 @@ function removeValidation() {
 /**
  * Show custom loading spinner
  */
-function showCustomSpinner() {
+function showCustomSpinner(text) {
+    // Remove existing spinner first
+    hideCustomSpinner();
+
+    const spinnerText = text || (window.i18n && window.i18n.calculating) || 'Calculating...';
     const spinnerHTML = `
         <div class="custom-spinner-overlay">
             <div class="custom-spinner">
-                <div class="custom-spinner-circle"></div>
-                <div class="custom-spinner-inner"></div>
-                <div class="spinner-text">Calculating...</div>
+                <div class="spinner-dots">
+                    <div class="spinner-dot"></div>
+                    <div class="spinner-dot"></div>
+                    <div class="spinner-dot"></div>
+                </div>
+                <div class="spinner-text">${spinnerText}</div>
             </div>
         </div>
     `;
@@ -32,21 +39,25 @@ function showCustomSpinner() {
  * Hide custom loading spinner
  */
 function hideCustomSpinner() {
-    const overlay = document.querySelector('.custom-spinner-overlay');
-    if (overlay) {
-        overlay.remove();
-    }
+    const overlays = document.querySelectorAll('.custom-spinner-overlay');
+    overlays.forEach(function(overlay) {
+        overlay.parentNode.removeChild(overlay);
+    });
 }
 
 /**
  * Initialize application when DOM is ready
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle form submission spinner
+    // Handle form submission spinner (skip for finite field form - it has its own handling)
     const confirmButton = document.getElementById('confirmCalculationButton');
     if (confirmButton) {
         confirmButton.addEventListener('click', function(e) {
             const form = this.closest('form');
+            // Skip spinner for finite field form - it has async handling with its own spinner
+            if (form && form.id === 'finiteFieldForm') {
+                return;
+            }
             if (form && form.checkValidity()) {
                 showCustomSpinner();
             }

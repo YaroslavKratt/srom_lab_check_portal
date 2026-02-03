@@ -66,7 +66,7 @@
                                    th:field="*{firstNumber}"
                                    th:classappend="${#fields.hasErrors('firstNumber')} ? 'is-invalid'"
                                    th:placeholder="#{placeholder.number.a}" />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstNumber')}" th:errors="*{firstNumber}"></div>
+                            <div class="invalid-feedback" th:text="${#fields.hasErrors('firstNumber')} ? ${#fields.errors('firstNumber')[0]} : ''"></div>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
                                    th:field="*{secondNumber}"
                                    th:classappend="${#fields.hasErrors('secondNumber')} ? 'is-invalid'"
                                    th:placeholder="#{placeholder.number.b}" />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('secondNumber')}" th:errors="*{secondNumber}"></div>
+                            <div class="invalid-feedback" th:text="${#fields.hasErrors('secondNumber')} ? ${#fields.errors('secondNumber')[0]} : ''"></div>
                         </div>
                     </div>
 
@@ -94,7 +94,7 @@
                                    th:field="*{thirdNumber}"
                                    th:classappend="${#fields.hasErrors('thirdNumber')} ? 'is-invalid'"
                                    th:placeholder="#{placeholder.number.c}" />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('thirdNumber')}" th:errors="*{thirdNumber}"></div>
+                            <div class="invalid-feedback" th:text="${#fields.hasErrors('thirdNumber')} ? ${#fields.errors('thirdNumber')[0]} : ''"></div>
                         </div>
                     </div>
                 </div>
@@ -225,6 +225,7 @@
     window.i18n.calculating = /*[[#{error.calculating}]]*/ 'Calculating...';
     window.i18n.errorOccurred = /*[[#{error.general.message}]]*/ 'An unexpected error occurred. Please try again later.';
     window.i18n.fillAllFields = /*[[#{error.empty.field}]]*/ 'Please fill in all required fields';
+    window.i18n.wrongFormat = /*[[#{error.wrong.format}]]*/ 'Invalid number format, check the number system';
 </script>
 
 <!-- Scripts -->
@@ -245,8 +246,10 @@ document.addEventListener('DOMContentLoaded', function() {
         overlay.className = 'custom-spinner-overlay';
         overlay.id = 'calculation-spinner';
         overlay.innerHTML = '<div class="custom-spinner">' +
-            '<div class="custom-spinner-circle">' +
-            '<div class="custom-spinner-inner"></div>' +
+            '<div class="spinner-dots">' +
+            '<div class="spinner-dot"></div>' +
+            '<div class="spinner-dot"></div>' +
+            '<div class="spinner-dot"></div>' +
             '</div>' +
             '<div class="spinner-text">' + text + '</div>' +
             '</div>';
@@ -260,16 +263,83 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Validation functions
+    function isValidNumber(value, numberSystem) {
+        if (!value) return false;
+        switch (numberSystem) {
+            case 'HEX':
+                return /^[0-9A-Fa-f]+$/.test(value);
+            case 'BIN':
+                return /^[01]+$/.test(value);
+            case 'DECIMAL':
+                return /^[0-9]+$/.test(value);
+            default:
+                return false;
+        }
+    }
+
+    function showFieldError(inputId, message) {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.classList.add('is-invalid');
+            // Show error message
+            const feedback = input.parentNode.querySelector('.invalid-feedback');
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.textContent = message || window.i18n.wrongFormat;
+            }
+        }
+    }
+
+    function clearFieldErrors() {
+        const inputs = form.querySelectorAll('.is-invalid');
+        inputs.forEach(function(input) {
+            input.classList.remove('is-invalid');
+        });
+        const feedbacks = form.querySelectorAll('.invalid-feedback');
+        feedbacks.forEach(function(feedback) {
+            feedback.style.display = 'none';
+        });
+    }
+
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        clearFieldErrors();
 
-        // Validate required fields
+        // Get values
         const firstNumber = document.getElementById('fnumber').value.trim();
         const secondNumber = document.getElementById('snumber').value.trim();
         const thirdNumber = document.getElementById('module').value.trim();
+        const numberSystem = document.getElementById('numberSystemSelect').value;
 
-        if (!firstNumber || !secondNumber || !thirdNumber) {
-            alert(window.i18n.fillAllFields);
+        // Validate required fields
+        let hasError = false;
+
+        if (!firstNumber) {
+            showFieldError('fnumber', window.i18n.fillAllFields);
+            hasError = true;
+        } else if (!isValidNumber(firstNumber, numberSystem)) {
+            showFieldError('fnumber', window.i18n.wrongFormat);
+            hasError = true;
+        }
+
+        if (!secondNumber) {
+            showFieldError('snumber', window.i18n.fillAllFields);
+            hasError = true;
+        } else if (!isValidNumber(secondNumber, numberSystem)) {
+            showFieldError('snumber', window.i18n.wrongFormat);
+            hasError = true;
+        }
+
+        if (!thirdNumber) {
+            showFieldError('module', window.i18n.fillAllFields);
+            hasError = true;
+        } else if (!isValidNumber(thirdNumber, numberSystem)) {
+            showFieldError('module', window.i18n.wrongFormat);
+            hasError = true;
+        }
+
+        if (hasError) {
             return;
         }
 
@@ -298,9 +368,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(data)
             });
 
-            // Hide spinner immediately after response
-            hideSpinner();
-
             const result = await response.json();
 
             if (result.success) {
@@ -322,12 +389,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (error) {
             console.error('Error:', error);
-            hideSpinner();
             alert(window.i18n.errorOccurred);
         } finally {
-            // Re-enable button
+            // Always hide spinner and re-enable button
+            hideSpinner();
             calculateBtn.disabled = false;
         }
+    });
+
+    // Clear errors on input
+    ['fnumber', 'snumber', 'module'].forEach(function(id) {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                const feedback = this.parentNode.querySelector('.invalid-feedback');
+                if (feedback) {
+                    feedback.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    // Clear errors when number system changes
+    document.getElementById('numberSystemSelect').addEventListener('change', function() {
+        clearFieldErrors();
     });
 });
 </script>
